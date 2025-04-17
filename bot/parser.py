@@ -567,6 +567,9 @@ class FaceBook:
                         return
                 
                 expected_success = account["count_spam"]
+                if len(GLOBAL_ITEMS_IDS_ACCOUNTS[account["id"]]) < expected_success:
+                    expected_success = len(GLOBAL_ITEMS_IDS_ACCOUNTS[account["id"]])
+
                 real_success = 0
                 count = 0
                 for item_id in GLOBAL_ITEMS_IDS_ACCOUNTS[account["id"]]:

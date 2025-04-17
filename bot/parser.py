@@ -117,7 +117,11 @@ def check_global_items_ids(account_id: int):
     for item_id in GLOBAL_ITEMS_IDS_ACCOUNTS[account_id]:
         for account_id_glob, item_ids in GLOBAL_ITEMS_IDS_ACCOUNTS.items():
             if item_id in item_ids and account_id_glob != account_id:
-                GLOBAL_ITEMS_IDS_ACCOUNTS[account_id].remove(item_id)
+                try:
+                    index = item_ids.index(item_id)
+                    GLOBAL_ITEMS_IDS_ACCOUNTS[account_id_glob].pop(index)
+                except:
+                    logger.warning("❌ Error removing item_id from GLOBAL_ITEMS_IDS_ACCOUNTS")
     GLOBAL_ITEMS_IDS_ACCOUNTS[account_id] = list(set(GLOBAL_ITEMS_IDS_ACCOUNTS[account_id]))
 
 def extract_ids_with_typename(html: str):

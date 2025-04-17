@@ -114,14 +114,21 @@ def get_random_sec_ch_ua():
     )
 
 def check_global_items_ids(account_id: int):
+    indexes = []
     for item_id in GLOBAL_ITEMS_IDS_ACCOUNTS[account_id]:
         for account_id_glob, item_ids in GLOBAL_ITEMS_IDS_ACCOUNTS.items():
             if item_id in item_ids and account_id_glob != account_id:
                 try:
                     index = GLOBAL_ITEMS_IDS_ACCOUNTS[account_id].index(item_id)
-                    GLOBAL_ITEMS_IDS_ACCOUNTS[account_id].pop(index)
+                    indexes.append(index)
                 except:
                     logger.warning("❌ Error removing item_id from GLOBAL_ITEMS_IDS_ACCOUNTS")
+    
+    for index in sorted(indexes, reverse=True):
+        try:
+            GLOBAL_ITEMS_IDS_ACCOUNTS[account_id].pop(index)
+        except Exception as e:
+            logger.warning("❌ Error removing item_id from GLOBAL_ITEMS_IDS_ACCOUNTS: %s", e)
     GLOBAL_ITEMS_IDS_ACCOUNTS[account_id] = list(set(GLOBAL_ITEMS_IDS_ACCOUNTS[account_id]))
 
 def extract_ids_with_typename(html: str):

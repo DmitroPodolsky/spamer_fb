@@ -118,8 +118,8 @@ def check_global_items_ids(account_id: int):
         for account_id_glob, item_ids in GLOBAL_ITEMS_IDS_ACCOUNTS.items():
             if item_id in item_ids and account_id_glob != account_id:
                 try:
-                    index = item_ids.index(item_id)
-                    GLOBAL_ITEMS_IDS_ACCOUNTS[account_id_glob].pop(index)
+                    index = GLOBAL_ITEMS_IDS_ACCOUNTS[account_id].index(item_id)
+                    GLOBAL_ITEMS_IDS_ACCOUNTS[account_id].pop(index)
                 except:
                     logger.warning("❌ Error removing item_id from GLOBAL_ITEMS_IDS_ACCOUNTS")
     GLOBAL_ITEMS_IDS_ACCOUNTS[account_id] = list(set(GLOBAL_ITEMS_IDS_ACCOUNTS[account_id]))
@@ -570,13 +570,15 @@ class FaceBook:
                         )
                         return
                 
+                
                 expected_success = account["count_spam"]
                 if len(GLOBAL_ITEMS_IDS_ACCOUNTS[account["id"]]) < expected_success:
                     expected_success = len(GLOBAL_ITEMS_IDS_ACCOUNTS[account["id"]])
+                expected_items = GLOBAL_ITEMS_IDS_ACCOUNTS[account["id"]].copy()
 
                 real_success = 0
                 count = 0
-                for item_id in GLOBAL_ITEMS_IDS_ACCOUNTS[account["id"]]:
+                for item_id in expected_items:
                     account = await get_account(account["id"])
                     if account["is_blocked"]:
                         break

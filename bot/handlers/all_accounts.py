@@ -1,4 +1,5 @@
 import asyncio
+import random
 from aiogram import Bot
 from aiogram.types import Message
 from aiogram.types import CallbackQuery
@@ -34,8 +35,10 @@ async def set_configure_proxy_callback(callback: CallbackQuery, state: FSMContex
     
 async def set_configure_proxy(message: Message, state: FSMContext):
     accounts = await get_user_accounts(user_id=message.from_user.id)
+    proxies = message.text.split("\n")
     for account in accounts:
-        await set_proxy_account(account_id=account["id"], proxy_url=message.text)
+        random_proxy = random.choice(proxies)
+        await set_proxy_account(account_id=account["id"], proxy_url=random_proxy)
         logger.info(f"Account {account['id']} proxy url set")
     
     await send_configure_accounts_ikb(message, message.from_user.id)

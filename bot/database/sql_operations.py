@@ -73,6 +73,7 @@ async def set_rate_limit_account(account_id: int, rate_limit: int):
     await execute_query(query, (rate_limit, account_id))
     
 async def set_proxy_account(account_id: int, proxy_url: str):
+    proxy_url = proxy_url.replace("\n", "")
     query = """
         UPDATE account
         SET proxy_url = ?
@@ -81,6 +82,7 @@ async def set_proxy_account(account_id: int, proxy_url: str):
     await execute_query(query, (proxy_url, account_id))
     
 async def set_user_agent_account(account_id: int, user_agent: str):
+    user_agent = user_agent.replace("\n", "")
     query = """
         UPDATE account
         SET user_agent = ?
@@ -104,14 +106,6 @@ async def set_count_spam_account(account_id: int, count_spam: int):
     """
     await execute_query(query, (count_spam, account_id))
     
-async def set_category_link_account(account_id: int, category_link: str):
-    query = """
-        UPDATE account
-        SET category_link = ?
-        WHERE id = ?
-    """
-    await execute_query(query, (category_link, account_id))
-    
 async def set_geolocation_id_account(account_id: int, geolocation_id: int):
     query = """
         UPDATE account
@@ -129,6 +123,7 @@ async def set_radius_account(account_id: int, radius: int):
     await execute_query(query, (radius, account_id))
     
 async def set_category_link_account(account_id: int, category_link: str):
+    category_link = category_link.replace("\n", "")
     query = """
         UPDATE account
         SET category_link = ?

@@ -96,15 +96,6 @@ def get_random_user_agent():
         f"Chrome/{chrome_version}.0.0.{build_number} Safari/537.36"
     )
 
-def get_proxy_string(proxy_port: int = os.environ.get("PROXY_PORT")):
-    # socks5h://54595891-zone-custom-region-UA:USS6ATGn@eu.proxys5.net:6200
-    # 60d0e3db386eef0527a3:c816dd2e026cafdf@gw.dataimpulse.com:824
-    proxy_port = 824
-    proxy_host = "gw.dataimpulse.com"
-    proxy_user = "60d0e3db386eef0527a3"
-    proxy_pass = "c816dd2e026cafdf"
-    return f"socks5://{proxy_user}:{proxy_pass}@{proxy_host}:{proxy_port}"
-
 def get_random_sec_ch_ua():
     chrome_version = random.randint(125, 130)
     return (

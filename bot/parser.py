@@ -499,6 +499,7 @@ class FaceBook:
                 "candidate_retrieval_source_map": json.dumps(commerce_rank_obj['candidate_retrieval_source_map'])
             }
             }
+            data["__crn"] = "comet.fbweb.CometMarketplaceHoistedPermalinkRoute"
             Var = {
                 "input":{
                     "client_mutation_id":"2",
@@ -545,6 +546,10 @@ class FaceBook:
                         url = self.url_fb_search.replace("0", str(account["geolocation_id"])) + f"query={query}"
                     else:
                         url = self.url_fb_category + f"query={query}"
+                else:
+                    query = "query=vehicles"
+                    if account["geolocation_id"]:
+                        url = self.url_fb_search.replace("0", str(account["geolocation_id"])) + query
                         
                 if account["time_filter_spam_id"]:
                     if account["time_filter_spam_id"] in[1, 2, 3, 4, 5, 6]:
